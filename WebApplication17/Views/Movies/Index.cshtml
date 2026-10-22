@@ -1,0 +1,62 @@
+﻿@model IEnumerable<WebApplication17.Models.Movie>
+
+@{
+    ViewData["Title"] = "Movie Catalog";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Каталог фільмів</h2>
+    <a asp-controller="Auth" asp-action="Logout" class="btn btn-outline-danger">Вийти</a>
+</div>
+
+
+<form method="get" asp-action="Index" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <input type="text" name="search" value="@ViewData["CurrentSearch"]" class="form-control" placeholder="Пошук за назвою..." />
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="genre" value="@ViewData["CurrentGenre"]" class="form-control" placeholder="Фільтр за жанром..." />
+    </div>
+    <div class="col-md-3">
+        <select name="sortBy" class="form-select">
+            <option value="">Сортувати за...</option>
+            <option value="title" selected="@(ViewData["CurrentSort"]?.ToString() == "title")">Назва</option>
+            <option value="year" selected="@(ViewData["CurrentSort"]?.ToString() == "year")">Рік випуску</option>
+            <option value="rating" selected="@(ViewData["CurrentSort"]?.ToString() == "rating")">Рейтинг</option>
+        </select>
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+        <div class="form-check d-flex align-items-center">
+            <input type="checkbox" name="descending" value="true" class="form-check-input" id="desc" @(ViewData["IsDescending"]?.ToString() == "True" ? "checked" : "") />
+            <label class="form-check-label ms-1" for="desc">За спаданням</label>
+        </div>
+        <button type="submit" class="btn btn-success">Застосувати</button>
+    </div>
+</form>
+
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Назва</th>
+            <th>Жанр</th>
+            <th>Рік</th>
+            <th>Рейтинг</th>
+            <th>Дії</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>@movie.Title</td>
+                <td>@movie.Genre</td>
+                <td>@movie.ReleaseYear</td>
+                <td><span class="badge bg-warning text-dark">★ @movie.Rating</span></td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-sm btn-info text-white">Деталі</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,28 @@
+﻿@model WebApplication17.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Авторизація";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <h2 class="text-center mb-4">Вхід у систему</h2>
+        <form asp-action="Login" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label">Логін</label>
+                <input asp-for="Username" class="form-control" placeholder="Введіть admin" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Пароль</label>
+                <input asp-for="Password" class="form-control" type="password" placeholder="Введіть password123" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Увійти</button>
+        </form>
+    </div>
+</div>
